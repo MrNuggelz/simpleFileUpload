@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>File Upload</title>
+        <style>
+body {
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: #002b36;
+  text-align: center;
+  color: #839496;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
+  background-color: #b5b5b5;
+  padding: 15px;
+  background-color: #073642;
+}
+
+.uploadBox {
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border: 3px dotted #eee8d5;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 700px;
+}
+
+.uploadBox:hover {
+  border: 3px solid #eee8d5;
+}
+
+.uploadBox h4 {
+  font-weight: 400;
+  margin: 100px;
+  color: #586e75;
+}
+        </style>
+    </head>
+    <body>
+        <div>
+            <h2>Upload your files in the box below</h2>
+            <p>Selected files will be uploaded directly/automatically</p>
+            <div class="card">
+                <form action="/upload" method="POST" enctype="multipart/form-data">
+                    <label for="fileInput">
+                        <div class="uploadBox">
+                            <h4>Select files here</h4>
+                            <input type="file" hidden multiple id="fileInput" style="display:none;" name="files" onchange="form.submit()">
+                        </div>
+                    </label>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
