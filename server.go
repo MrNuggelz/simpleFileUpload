@@ -10,7 +10,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"strings"
 )
 
 type ConfigValues struct {
@@ -112,13 +111,12 @@ func handleUpload(config ConfigValues, w http.ResponseWriter, r *http.Request) {
 			log.Printf("Uploaded %s\n", fileHeader.Filename)
 
 			if config.postProcessing != "" {
-				splits := strings.SplitN(config.postProcessing, " ", 2)
-				cmd := splits[0]
-				args := fmt.Sprintf(splits[1], fileHeader.Filename)
+				formatedCommand := fmt.Sprintf(config.postProcessing, fileHeader.Filename)
 
-				if err := exec.Command(cmd, args).Run(); err != nil {
+                                if postprocessingOutput, err := exec.Command("sh", "-c", formatedCommand).CombinedOutput(); err != nil {
 					log.Printf("Error running post processing for %s: %s", fileHeader.Filename, err)
-					log.Printf("Command was %s %s", cmd, args)
+					log.Printf("Command was %s", formatedCommand)
+                                        log.Printf("Output was: %s\n", postprocessingOutput)
 					http.Error(w, "Unable run post processing for "+fileHeader.Filename, http.StatusInternalServerError)
 					continue
 				}
