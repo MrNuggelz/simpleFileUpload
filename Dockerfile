@@ -4,7 +4,7 @@ COPY server.go go.mod ./
 
 RUN CGO_ENABLED=0 go build
 
-FROM alpine:3.22.0
+FROM alpine:3.22.1
 
 COPY --from=builder /go/server /server
 COPY index.html /
